@@ -2,50 +2,58 @@ using UnityEngine;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    [SerializeField] int xSize = 20;
-    [SerializeField] int zSize = 20;
-    [SerializeField] MeshFilter mF;
+    public int depth = 20;
 
-    Vector3[] vertices;
-    private Mesh mesh;
+    public int width = 250;
+    public int height = 250;
+
+    public float scale = 20f;
+
+    public float offsetX;
+    public float offsetY;
 
     void Start()
     {
-        GenerateTerrain();
-        mesh = new Mesh();
+        offsetX = Random.Range(0f, 9999f);
+        offsetY = Random.Range(0f, 9999f);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        GenerateTerrain();
+        Terrain terrain = GetComponent<Terrain>();
+        terrain.terrainData = GenerateTerrain(terrain.terrainData);
     }
 
-    private void GenerateTerrain()
+    TerrainData GenerateTerrain(TerrainData terrainData)
     {
-        vertices = new Vector3[(xSize + 1) * (zSize + 1)];
+        terrainData.heightmapResolution = width + 1;
 
-        int i = 0;
-        for (int z = 0; z <= zSize; z++)
+        terrainData.size = new Vector3(width, depth, height);
+
+        terrainData.SetHeights(0, 0, GenerateHeights());
+        return terrainData;
+    }
+
+    float[,] GenerateHeights()
+    {
+        float[,] heights = new float[width, height];
+
+        for (int x = 0; x < width; x++)
         {
-            for (int x = 0; x <= xSize; x++)
+            for (int y = 0; y < height; y++)
             {
-                vertices[i] = new Vector3(x, 0, z);
-                i++;
+                heights[x, y] = CalculateHeight(x, y);
             }
         }
 
-        mF.mesh = mesh;
+        return heights;
     }
 
-    private void OnDrawGizmos()
+    float CalculateHeight(int x, int y)
     {
-        if (vertices == null)
-            return;
+        float xCoord = (float)x / width * scale + offsetX;
+        float yCoord = (float)y / height * scale + offsetY;
 
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            Gizmos.DrawSphere(vertices[i], 0.1f);
-        }
+        return Mathf.PerlinNoise(xCoord, yCoord);
     }
 }
