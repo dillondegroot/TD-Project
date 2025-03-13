@@ -2,21 +2,22 @@
 
 public class EnemyHP : MonoBehaviour
 {
-    public int health = 10; // 🔹 Start HP van de vijand
+    public int health = 10;
+    public EnemySpawner spawner;  // 🔹 Verwijzing naar de spawner
 
     public void TakeDamage(int damage)
     {
         health -= damage;
-        Debug.Log(gameObject.name + " HP: " + health);
 
         if (health <= 0)
         {
+            spawner.EnemyDied();  // 🔹 Vertel de spawner dat deze vijand is gestorven
             Destroy(gameObject);
         }
     }
 
-    public int GetHealth()  // 🔹 Geeft de resterende HP terug
+    public int GetHealth()
     {
-        return Mathf.Max(health, 0); // Voorkomt negatieve waarden
+        return health;
     }
 }
