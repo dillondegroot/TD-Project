@@ -2,43 +2,34 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Snelheid van de speler
-    public float jumpForce = 5f; // Kracht van de sprong
+    public float moveSpeed = 5f;  // Beweeg snelheid
+    public float rotationSpeed = 100f; // Rotatie snelheid
+
     private Rigidbody rb;
 
-    private void Start()
+    void Start()
     {
-        rb = GetComponent<Rigidbody>(); // Haal de Rigidbody op
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true; // Voorkomt dat de speler omvalt
     }
 
-    private void Update()
+    void Update()
     {
         Move();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
-        }
+        Rotate();
     }
 
     void Move()
     {
-        float moveX = Input.GetAxis("Horizontal"); // A & D / Links & Rechts
-        float moveZ = Input.GetAxis("Vertical");   // W & S / Vooruit & Achteruit
-
-        Vector3 moveDirection = new Vector3(moveX, 0, moveZ) * moveSpeed;
+        float moveZ = Input.GetAxis("Vertical"); // W & S (Vooruit/Achteruit)
+        Vector3 moveDirection = transform.forward * moveZ * moveSpeed;
         rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
     }
 
-    void Jump()
+    void Rotate()
     {
-        if (IsGrounded())
-        {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
-        }
-    }
-
-    bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+        float rotateY = Input.GetAxis("Horizontal"); // A & D (Roteren)
+        transform.Rotate(0, rotateY * rotationSpeed * Time.deltaTime, 0);
     }
 }
+    
