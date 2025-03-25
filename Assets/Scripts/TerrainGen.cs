@@ -16,12 +16,15 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] Gradient terrainGradient;
     [SerializeField] Material mat;
 
+    [SerializeField] Texture2D path;
+
     private Mesh mesh;
     private Texture2D gradientTexture;
 
     void Start()
     {
         mesh = new Mesh();
+        mesh.name = "Ground";
         GetComponent<MeshFilter>().mesh = mesh;
 
         xOffset = Random.Range(10, 500);
@@ -29,6 +32,8 @@ public class TerrainGenerator : MonoBehaviour
 
         GenerateTerrain();
         GradientToTexture();
+
+        GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
     void Update()

@@ -2,8 +2,9 @@ Shader "Custom/TerrainShader"
 {
     Properties
     {
-
+        
     }
+
     SubShader
     {
         Tags { "RenderType" = "Opaque" }
@@ -29,7 +30,7 @@ Shader "Custom/TerrainShader"
         {
             float3 worldPosY = IN.worldPos.y;
 
-            float heightValue = saturate((worldPosY - minTerrainHeight) / (maxTerrainHeight - minTerrainHeight));
+            float heightValue = saturate((worldPosY - minTerrainHeight) / (maxTerrainHeight - minTerrainHeight)); 
 
             o.Albedo = tex2D(terrainGradient, float2(0, heightValue));
         }
