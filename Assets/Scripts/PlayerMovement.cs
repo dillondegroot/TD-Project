@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float moveZ = Input.GetAxis("Vertical"); // W & S (Vooruit/Achteruit)
         Vector3 moveDirection = transform.forward * moveZ * moveSpeed;
-        rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
+        rb.linearVelocity = new Vector3(moveDirection.x, rb.linearVelocity.y, moveDirection.z);
     }
 
     void Rotate()
