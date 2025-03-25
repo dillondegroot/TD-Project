@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-using TMPro;
+using TMPro; // gebruikt TMPro ander werkt text niet
 
 public class EnemySpawner : MonoBehaviour
 {
