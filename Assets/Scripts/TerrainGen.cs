@@ -16,8 +16,6 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] Gradient terrainGradient;
     [SerializeField] Material mat;
 
-    [SerializeField] Texture2D path;
-
     private Mesh mesh;
     private Texture2D gradientTexture;
 
@@ -34,6 +32,14 @@ public class TerrainGenerator : MonoBehaviour
         GradientToTexture();
 
         GetComponent<MeshCollider>().sharedMesh = mesh;
+
+        for (int i = 0; i < WayPoints.waypoints.Length; i++)
+        {
+            if (Physics.Raycast(WayPoints.waypoints[i].position, Vector3.down, out RaycastHit hit, 50))
+            {
+                WayPoints.waypoints[i].position = new Vector3(hit.point.x, hit.point.y + 1.5f, hit.point.z);
+            }
+        }
     }
 
     void Update()
