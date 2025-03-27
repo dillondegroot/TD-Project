@@ -11,7 +11,7 @@ public class EndZone : MonoBehaviour
             EnemyHP enemyHP = other.GetComponent<EnemyHP>();
             if (enemyHP != null)
             {
-                int damage = enemyHP.GetHealth();
+                float damage = enemyHP.GetHealth();
                 baseHealth.TakeDamage(damage);
 
                 // 🔹 Laat de spawner weten dat de vijand weg is

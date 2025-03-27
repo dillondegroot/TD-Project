@@ -2,9 +2,9 @@
 
 public class BaseHP : MonoBehaviour
 {
-    public int health = 100;  // 🔹 Start HP van de basis
+    public float health = 100f;  // 🔹 Start HP van de basis
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         Debug.Log("Basis HP: " + health);

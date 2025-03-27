@@ -3,13 +3,13 @@ using UnityEngine.UI;
 
 public class EnemyHealthBar : MonoBehaviour
 {
-    public Image healthBarFill;  // Sleep hier de Image van de healthbar in de Inspector
+    public Image healthBarFill;  // Sleep de Healthbar Fill hier in de Inspector
 
-    public void SetHealth(int currentHealth, int maxHealth)
+    public void SetHealth(float currentHealth, float maxHealth)
     {
         if (healthBarFill != null)
         {
-            healthBarFill.fillAmount = (float)currentHealth / maxHealth;
+            healthBarFill.fillAmount = (float)currentHealth / maxHealth; // Update de fill
         }
     }
 }

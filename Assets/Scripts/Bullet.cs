@@ -2,44 +2,40 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 20f;
-    public int damage = 3;  // ?? Zorgt ervoor dat de toren 3 schade doet
+    public float speed = 10f;
+    public float damage = 3f;  // ?? Schade per kogel
     private Transform target;
 
-    public void SetTarget(Transform newTarget)
+    public void SetTarget(Transform enemyTarget)
     {
-        target = newTarget;
+        target = enemyTarget;
     }
 
     private void Update()
     {
         if (target == null)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // ?? Vernietig de kogel als er geen doel meer is
             return;
         }
 
-        // ?? Beweeg de kogel richting de vijand
-        Vector3 direction = target.position - transform.position;
-        float distanceThisFrame = speed * Time.deltaTime;
+        // ?? Beweeg naar het doelwit
+        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
-        if (direction.magnitude <= distanceThisFrame)
+        // ?? Controleer of de kogel het doel raakt
+        if (Vector3.Distance(transform.position, target.position) < 0.2f)
         {
             HitTarget();
-            return;
         }
-
-        transform.Translate(direction.normalized * distanceThisFrame, Space.World);
     }
 
-    void HitTarget()
+    private void HitTarget()
     {
-        EnemyHP enemyHp = target.GetComponent<EnemyHP>();
-        if (enemyHp != null)
+        EnemyHP enemyHP = target.GetComponent<EnemyHP>();
+        if (enemyHP != null)
         {
-            enemyHp.TakeDamage(damage);  // ?? Breng schade toe aan vijand
+            enemyHP.TakeDamage(damage);  // ?? Brengt schade toe aan de vijand
         }
-
-        Destroy(gameObject); // ?? Kogel verdwijnt na raken
+        Destroy(gameObject); // ?? Vernietig de kogel na impact
     }
 }

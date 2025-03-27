@@ -1,43 +1,44 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;  // Nodig voor UI-elementen
+using UnityEngine.UI;  // 🔹 Voor de healthbar
 
 public class EnemyHP : MonoBehaviour
 {
-    public int maxHealth = 10;
-    private int currentHealth;
+    public float maxHealth = 10;
+    private float currentHealth;
+    public Image healthBarFill; // 🔹 Verwijzing naar de healthbar
 
-    public EnemySpawner spawner;  // Verwijzing naar de spawner
-    private EnemyHealthBar healthBar; // Verwijzing naar de healthbar
+    public EnemySpawner spawner;  // 🔹 Link naar spawner (voor het tellen van vijanden)
 
     private void Start()
     {
         currentHealth = maxHealth;
-        healthBar = GetComponentInChildren<EnemyHealthBar>(); // Zoekt de HealthBar in de vijand
-        UpdateHealthBar();  // Zorgt dat de healthbar juist begint
+        UpdateHealthBar();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        UpdateHealthBar();  // Healthbar aanpassen bij schade
+
+        healthBarFill.fillAmount = currentHealth / maxHealth;
+        UpdateHealthBar();
 
         if (currentHealth <= 0)
         {
-            spawner.EnemyDied();  // Laat de spawner weten dat deze vijand is gestorven
+            spawner.EnemyDied();  // 🔹 Laat de spawner weten dat de vijand dood is
             Destroy(gameObject);
         }
     }
 
     private void UpdateHealthBar()
     {
-        if (healthBar != null)
+        if (healthBarFill != null)
         {
-            healthBar.SetHealth(currentHealth, maxHealth); // Stuur HP info naar de EnemyHealthBar
+            healthBarFill.fillAmount = (float)currentHealth / maxHealth;
         }
     }
 
-    public int GetHealth()
+    public float GetHealth() // 🔹 Nodig voor EndZone en andere scripts
     {
-        return currentHealth;  // Zorgt dat EndZone de HP kan opvragen
+        return currentHealth;
     }
 }
