@@ -4,7 +4,7 @@ public class Tower : MonoBehaviour
 {
     public Transform turret; // ?? Verwijzing naar het turret-object (kanon)
     public GameObject bulletPrefab; // ?? De kogel die wordt afgevuurd
-    public Transform firePoint; // ?? Waar de kogel uitkomt
+    public Transform[] firePoints; // ?? Meerdere vuurpunten
     public float range = 10f; // ?? Hoe ver de toren vijanden kan zien
     public float fireRate = 1f; // ?? Hoe vaak de toren schiet
     private float fireCooldown = 0f;
@@ -54,6 +54,8 @@ public class Tower : MonoBehaviour
 
     void RotateTurret()
     {
+        if (target == null) return;
+
         Vector3 direction = target.position - turret.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         Vector3 rotation = Quaternion.Lerp(turret.rotation, lookRotation, Time.deltaTime * 5f).eulerAngles;
@@ -62,7 +64,12 @@ public class Tower : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        bullet.GetComponent<Bullet>().SetTarget(target);
+        if (target == null) return;
+
+        foreach (Transform firePoint in firePoints) // ?? Schiet vanuit alle vuurpunten
+        {
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            bullet.GetComponent<Bullet>().SetTarget(target);
+        }
     }
 }

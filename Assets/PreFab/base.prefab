@@ -155,7 +155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turret: {fileID: 5811259776577262152}
   bulletPrefab: {fileID: 5718813213533373056, guid: 92841a4f4a5ba874dab404991d274b76, type: 3}
-  firePoint: {fileID: 5433211936009747245}
+  firePoints:
+  - {fileID: 5433211936009747245}
   range: 10
   fireRate: 1
 --- !u!1 &3247006745743562174
