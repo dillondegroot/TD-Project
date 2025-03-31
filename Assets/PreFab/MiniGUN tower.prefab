@@ -240,7 +240,7 @@ MonoBehaviour:
   - {fileID: 7703322127098896408}
   - {fileID: 6839625835737300984}
   range: 5
-  fireRate: 15
+  fireRate: 12
 --- !u!1 &2070713520455216910
 GameObject:
   m_ObjectHideFlags: 0
