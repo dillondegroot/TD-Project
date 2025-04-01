@@ -3,7 +3,7 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     public Transform turret; // ?? Verwijzing naar het turret-object (kanon)
-    public GameObject bulletPrefab; // ?? De kogel die wordt afgevuurd
+    public GameObject bulletPrefab;
     public Transform[] firePoints; // ?? Meerdere vuurpunten
     public float range = 10f; // ?? Hoe ver de toren vijanden kan zien
     public float fireRate = 1f; // ?? Hoe vaak de toren schiet
@@ -69,7 +69,13 @@ public class Tower : MonoBehaviour
         foreach (Transform firePoint in firePoints) // ?? Schiet vanuit alle vuurpunten
         {
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            bullet.GetComponent<Bullet>().SetTarget(target);
+            if(bullet.TryGetComponent<Bullet>(out Bullet normalBullet))
+            {
+                normalBullet.SetTarget(target);
+            }
+            
+
+            
         }
     }
 }

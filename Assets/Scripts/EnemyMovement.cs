@@ -1,19 +1,18 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public float speed = 5f;
+    public float speed = 5f;  // ?? Standaard snelheid
+    private float normalSpeed;  // ?? Opslaan van de originele snelheid
+    private bool isSlowed = false;
+
     private int waypointIndex = 0;
 
     private void Start()
     {
-        if (WayPoints.waypoints == null || WayPoints.waypoints.Length == 0)
-        {
-            Debug.LogError("Geen waypoints gevonden! Zorg ervoor dat WaypointManager goed is ingesteld.");
-            return;
-        }
-
-        transform.position = WayPoints.waypoints[0].position; // Start op eerste waypoint
+        normalSpeed = speed;  // ?? Bewaar de normale snelheid
+        transform.position = WayPoints.waypoints[0].position;
     }
 
     private void Update()
@@ -21,11 +20,11 @@ public class EnemyMovement : MonoBehaviour
         Move();
     }
 
-    private void Move()
+    void Move()
     {
         if (waypointIndex >= WayPoints.waypoints.Length)
         {
-            Destroy(gameObject); // Verwijder vijand als hij het einde bereikt
+            Destroy(gameObject);
             return;
         }
 
@@ -34,7 +33,24 @@ public class EnemyMovement : MonoBehaviour
 
         if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)
         {
-            waypointIndex++; // Ga naar het volgende waypoint
+            waypointIndex++;
         }
+    }
+
+    public void ApplySlow(float multiplier, float duration)
+    {
+        if (!isSlowed)  // ?? Voorkom dat het effect gestapeld wordt
+        {
+            isSlowed = true;
+            speed = Mathf.RoundToInt(normalSpeed * multiplier);  // ?? Reken uit en rond af op een heel getal
+            StartCoroutine(RemoveSlowEffect(duration));  // ?? Start de timer
+        }
+    }
+
+    private IEnumerator RemoveSlowEffect(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        speed = normalSpeed;
+        isSlowed = false;
     }
 }
