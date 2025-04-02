@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, Ground);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 2, Ground);
 
         MyInput();
         SpeedControl();
@@ -83,10 +83,6 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
-        // in air
-        else if (!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-
         // turn gravity off on slope
         rb.useGravity = !OnSlope();
     }
@@ -115,10 +111,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnSlope()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 1f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            return angle < maxSlopeAngle && angle != 0;
+            return angle != 0;
         }
         return false;
     }

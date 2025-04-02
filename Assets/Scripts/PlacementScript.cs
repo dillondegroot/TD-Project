@@ -10,6 +10,7 @@ public class PlacementScript : MonoBehaviour
     [SerializeField] GameObject tower1;
 
     bool isPlacing;
+    GameObject currentTower;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,6 +39,7 @@ public class PlacementScript : MonoBehaviour
         {
             if (isPlacing) isPlacing = false;
             else isPlacing = true;
+
         }
 
         if (isPlacing)
@@ -61,10 +63,14 @@ public class PlacementScript : MonoBehaviour
 
                 Physics.Raycast(ray, out RaycastHit hit, 100);
 
-                if (hit.transform)
+                if (hit.transform.tag == "Ground")
                 {
                     GameObject tower = Instantiate(tower1);
-                    tower.transform.position = new Vector3(hit.point.x, hit.point.y + 2.5f, hit.point.z);
+                    tower.transform.position = new Vector3(hit.point.x, hit.point.y + 1.5f, hit.point.z);
+                }
+                else
+                {
+                    Debug.Log("Can't place tower on something that isn't ground!");
                 }
                 isPlacing = false;
             }
