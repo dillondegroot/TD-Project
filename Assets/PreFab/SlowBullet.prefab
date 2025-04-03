@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  damage: 2
+  damage: 1
   slowMultiplier: 0.5
   slowDuration: 5
 --- !u!1 &7212913209444753373

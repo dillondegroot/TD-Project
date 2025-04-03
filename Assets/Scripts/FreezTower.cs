@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public class FreezeTower : MonoBehaviour
 {
-    public Transform turret; // Verwijzing naar het turret-object (kanon)
-    public GameObject bulletPrefab;
-    public Transform[] firePoints; //  Meerdere vuurpunten
-    public float range = 10f; //  Hoe ver de toren vijanden kan zien
-    public float fireRate = 1f; //  Hoe vaak de toren schiet
+    public Transform turret; 
+    public GameObject slowBulletPrefab; //  Alleen SlowBullet wordt gebruikt
+    public Transform[] firePoints; // dit wordt gebruikt voor verschillende FirePoints zo dat je meeder guns kan hebben
+    public float range = 10f; 
+    public float fireRate = 1f; 
     private float fireCooldown = 0f;
 
     private Transform target;
@@ -16,7 +16,7 @@ public class Tower : MonoBehaviour
         FindTarget();
         if (target != null)
         {
-            RotateTurret(); // ?? Laat het kanon draaien naar de vijand
+            RotateTurret(); 
             if (fireCooldown <= 0f)
             {
                 Shoot();
@@ -42,14 +42,7 @@ public class Tower : MonoBehaviour
             }
         }
 
-        if (nearestEnemy != null)
-        {
-            target = nearestEnemy.transform;
-        }
-        else
-        {
-            target = null;
-        }
+        target = nearestEnemy != null ? nearestEnemy.transform : null;
     }
 
     void RotateTurret()
@@ -59,23 +52,29 @@ public class Tower : MonoBehaviour
         Vector3 direction = target.position - turret.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         Vector3 rotation = Quaternion.Lerp(turret.rotation, lookRotation, Time.deltaTime * 5f).eulerAngles;
-        turret.rotation = Quaternion.Euler(0f, rotation.y, 0f); // ?? Alleen draaien over de Y-as
+        turret.rotation = Quaternion.Euler(0f, rotation.y, 0f); //  Alleen draaien over de Y-as
     }
 
     void Shoot()
     {
-        if (target == null) return;
-
-        foreach (Transform firePoint in firePoints) 
+        if (slowBulletPrefab == null)
         {
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            if(bullet.TryGetComponent<Bullet>(out Bullet normalBullet))
-            {
-                normalBullet.SetTarget(target);
-            }
-            
+            Debug.LogError("Geen SlowBullet prefab gekoppeld aan FreezeTower!");
+            return;
+        }
 
-            
+        foreach (Transform firePoint in firePoints)
+        {
+            GameObject bulletInstance = Instantiate(slowBulletPrefab, firePoint.position, firePoint.rotation);
+            SlowBullet bullet = bulletInstance.GetComponent<SlowBullet>();
+            if (bullet != null)
+            {
+                bullet.SetTarget(target);
+            }
+            else
+            {
+                Debug.LogError("De prefab bevat geen SlowBullet-script!");
+            }
         }
     }
 }
