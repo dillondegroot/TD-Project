@@ -454,7 +454,7 @@ MonoBehaviour:
   firePoints:
   - {fileID: 3432422405254226365}
   range: 10
-  fireRate: 100
+  fireRate: 1
 --- !u!1 &5318751371447394291
 GameObject:
   m_ObjectHideFlags: 0

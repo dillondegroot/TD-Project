@@ -122,9 +122,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5652ef0a51adf03479beae271fbd7d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
-  damagePerTick: 1
-  duration: 1
+  speed: 10
+  damagePerTick: 5
+  duration: 10
   tickRate: 1
 --- !u!1 &1034963758067482589
 GameObject:

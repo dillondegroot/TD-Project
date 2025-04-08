@@ -35,6 +35,7 @@ public class EnemyHP : MonoBehaviour
             StopCoroutine(poisonCoroutine);
         }
         poisonCoroutine = StartCoroutine(PoisonEffect(poisonDamage, duration, tickInterval));
+        
     }
 
     private IEnumerator PoisonEffect(float damage, float duration, float interval)
