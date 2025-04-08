@@ -1,16 +1,16 @@
-﻿using TMPro;  // 🔹 BELANGRIJK: Zorg dat dit bovenaan staat
+﻿using TMPro;
 using UnityEngine;
 
 public class WaveUI : MonoBehaviour
 {
-    public TMP_Text waveText;  // 🔹 Moet TMP_Text zijn, NIET Text!
+    public TMP_Text waveText;
     public EnemySpawner spawner;
 
     private void Start()
     {
         if (waveText == null)
         {
-            waveText = GameObject.Find("WaveText").GetComponent<TMP_Text>(); // 🔹 Automatisch zoeken
+            waveText = GameObject.Find("WaveText").GetComponent<TMP_Text>();
         }
 
         if (spawner == null)
@@ -23,6 +23,8 @@ public class WaveUI : MonoBehaviour
 
     private void Update()
     {
+        waveText.fontSize = 24;  // Pas dit getal aan naar wens
+
         UpdateWaveText();
     }
 
@@ -30,7 +32,7 @@ public class WaveUI : MonoBehaviour
     {
         if (spawner != null && waveText != null)
         {
-            waveText.text = "Wave: " + spawner.GetWaveNumber();
+            waveText.text = "Wave: " + spawner.GetWaveNumber() + " / " + spawner.GetMaxWaves();
         }
     }
 }

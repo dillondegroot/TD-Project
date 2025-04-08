@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
-using TMPro; // gebruikt TMPro ander werkt text niet
+using TMPro;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject[] enemyPrefabs;  // 🔹 Normale vijanden
-    public GameObject miniBossPrefab;  // 🔹 Miniboss prefab
-    public TMP_Text waveText;  // 🔹 UI weergave van de wave
+    public GameObject[] enemyPrefabs;
+    public GameObject miniBossPrefab;
+    public TMP_Text waveText;
 
     public float spawnRate = 1.5f;
     public int enemiesPerWave = 5;
     public float waveDelay = 5f;
-    public int totalWaves = 5;
+    public int maxWaves = 10;
     public bool endlessWaves = false;
 
     private int waveNumber = 1;
@@ -24,11 +24,11 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnWaves()
     {
-        while (endlessWaves || waveNumber <= totalWaves)
+        while (endlessWaves || waveNumber <= maxWaves)
         {
             if (waveText != null)
             {
-                waveText.text = "Wave: " + waveNumber;
+                waveText.text = "Wave: " + waveNumber + " / " + maxWaves;
             }
 
             Debug.Log("Wave " + waveNumber + " gestart!");
@@ -60,7 +60,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (WayPoints.waypoints == null || WayPoints.waypoints.Length == 0)
         {
-            Debug.LogError("Geen waypoints gevonden! Vijanden kunnen niet spawnen.");
+            Debug.LogError("Geen waypoints gevonden!");
             return;
         }
 
@@ -94,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            return null;
+            return enemyPrefabs[0]; // fallback
         }
     }
 
@@ -103,9 +103,13 @@ public class EnemySpawner : MonoBehaviour
         enemiesAlive--;
     }
 
-    // 🔹 Deze methode maakt het mogelijk om de huidige wave op te vragen
     public int GetWaveNumber()
     {
         return waveNumber;
+    }
+
+    public int GetMaxWaves()
+    {
+        return maxWaves;
     }
 }
