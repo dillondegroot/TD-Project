@@ -644,11 +644,12 @@ MonoBehaviour:
   - {fileID: 2000727893880250813, guid: 1d017f67a3585d54caf9a7ba6e69407d, type: 3}
   - {fileID: 8043077123054044237, guid: a0f53af78e2522c42a92b679132f5d0e, type: 3}
   miniBossPrefab: {fileID: 1715161789828596881, guid: 70810cfc844a61d4fbc09c91478a9169, type: 3}
+  bossPrefab: {fileID: 1000519241182976676, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
   waveText: {fileID: 0}
   spawnRate: 1.5
-  enemiesPerWave: 0
-  waveDelay: 1
-  maxWaves: 0
+  enemiesPerWave: 10
+  waveDelay: 1.5
+  maxWaves: 20
   endlessWaves: 0
 --- !u!65 &792654088
 BoxCollider:
@@ -1894,67 +1895,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069765583}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &3774028157891538518
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1000519241182976676, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_Name
-      value: Boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712423860410483907, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.248049
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712423860410483907, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.1090271
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712423860410483907, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.6984279
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712423860410483907, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712423860410483907, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712423860410483907, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712423860410483907, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712423860410483907, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712423860410483907, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6712423860410483907, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8940511246696104960, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
-      propertyPath: spawner
-      value: 
-      objectReference: {fileID: 792654087}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 044d77c38fdfa70478b352d62f8aec13, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1970,4 +1910,3 @@ SceneRoots:
   - {fileID: 1348469920}
   - {fileID: 887000509}
   - {fileID: 1678070817}
-  - {fileID: 3774028157891538518}

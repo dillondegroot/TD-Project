@@ -6,12 +6,13 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject[] enemyPrefabs;
     public GameObject miniBossPrefab;
+    public GameObject bossPrefab;
     public TMP_Text waveText;
 
     public float spawnRate = 1.5f;
     public int enemiesPerWave = 5;
     public float waveDelay = 5f;
-    public int maxWaves = 10;
+    public int maxWaves = 20;
     public bool endlessWaves = false;
 
     private int waveNumber = 1;
@@ -34,26 +35,52 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log("Wave " + waveNumber + " gestart!");
             enemiesAlive = 0;
 
-            if (waveNumber == 5)
+            // Wave 20: eindbaas + 6 minibosses, geen gewone enemies
+            if (waveNumber == 20)
+            {
+                SpawnBoss();
+                for (int i = 0; i < 6; i++)
+                {
+                    SpawnMiniBoss();
+                }
+            }
+            // Wave 10: boss + 3 minibosses + gewone enemies
+            else if (waveNumber == 10)
+            {
+                SpawnBoss();
+                for (int i = 0; i < 3; i++)
+                {
+                    SpawnMiniBoss();
+                }
+                yield return SpawnRegularEnemies();
+            }
+            // Elke 5e wave (5, 15): 1 miniboss + gewone enemies
+            else if (waveNumber % 5 == 0)
             {
                 SpawnMiniBoss();
+                yield return SpawnRegularEnemies();
             }
+            // Alle andere waves: alleen gewone enemies
             else
             {
-                for (int i = 0; i < enemiesPerWave; i++)
-                {
-                    SpawnEnemy();
-                    yield return new WaitForSeconds(spawnRate);
-                }
+                yield return SpawnRegularEnemies();
             }
 
             yield return new WaitUntil(() => enemiesAlive <= 0);
-
             waveNumber++;
             yield return new WaitForSeconds(waveDelay);
         }
 
         Debug.Log("Alle waves voltooid!");
+    }
+
+    private IEnumerator SpawnRegularEnemies()
+    {
+        for (int i = 0; i < enemiesPerWave; i++)
+        {
+            SpawnEnemy();
+            yield return new WaitForSeconds(spawnRate);
+        }
     }
 
     private void SpawnEnemy()
@@ -82,19 +109,23 @@ public class EnemySpawner : MonoBehaviour
         miniBoss.GetComponent<EnemyHP>().spawner = this;
     }
 
+    private void SpawnBoss()
+    {
+        GameObject boss = Instantiate(bossPrefab, WayPoints.waypoints[0].position, Quaternion.identity);
+        boss.name = "Boss Clone";
+        enemiesAlive++;
+        boss.GetComponent<EnemyHP>().spawner = this;
+    }
+
     private GameObject SelectEnemy()
     {
         if (waveNumber < 3)
         {
             return enemyPrefabs[0];
         }
-        else if (waveNumber < 5)
-        {
-            return enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-        }
         else
         {
-            return enemyPrefabs[0]; // fallback
+            return enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
         }
     }
 

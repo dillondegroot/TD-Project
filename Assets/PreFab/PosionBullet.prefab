@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  damagePerTick: 5
+  damagePerTick: 3
   duration: 10
   tickRate: 1
 --- !u!1 &1034963758067482589
