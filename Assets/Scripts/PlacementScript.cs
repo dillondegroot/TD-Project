@@ -55,7 +55,7 @@ public class PlacementScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         MoveCircle();
         OnClick();

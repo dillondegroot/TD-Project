@@ -42,7 +42,7 @@ public class EnemyMovement : MonoBehaviour
         if (!isSlowed)  // ?? Voorkom dat het effect gestapeld wordt
         {
             isSlowed = true;
-            speed = Mathf.RoundToInt(normalSpeed * multiplier);  // ?? Reken uit en rond af op een heel getal
+            speed = (normalSpeed * multiplier);  // ?? Reken uit en rond af op een heel getal
             StartCoroutine(RemoveSlowEffect(duration));  // ?? Start de timer
         }
     }
