@@ -3,6 +3,7 @@
 public class BaseHP : MonoBehaviour
 {
     public float health = 100f;  // 🔹 Start HP van de basis
+    public GameObject deathScreen;
 
     public void TakeDamage(float damage)
     {
@@ -12,7 +13,7 @@ public class BaseHP : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log("Game Over! De basis is vernietigd.");
-            // ❗ Voeg hier je game-over logica toe
+            deathScreen.SetActive(true);  // 🔹 Toon het game over scherm
         }
     }
 }
