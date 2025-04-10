@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;  // 🔹 Voor de healthbar
+using UnityEngine.UI;
+using System.Collections;
+
+public enum EnemyType { Nomral, MiniBoss, Boss }
 
 public class EnemyHP : MonoBehaviour
 {
     public float maxHealth = 10;
     private float currentHealth;
-    public Image healthBarFill; // 🔹 Verwijzing naar de healthbar
+    public Image healthBarFill;
+    public EnemySpawner spawner;
 
-    public EnemySpawner spawner;  // 🔹 Link naar spawner (voor het tellen van vijanden)
+    public EnemyType enemyType;
+
+    private Coroutine poisonCoroutine;
 
     private void Start()
     {
@@ -18,14 +24,38 @@ public class EnemyHP : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-
-        healthBarFill.fillAmount = currentHealth / maxHealth;
         UpdateHealthBar();
 
         if (currentHealth <= 0)
         {
-            spawner.EnemyDied();  // 🔹 Laat de spawner weten dat de vijand dood is
-            Destroy(gameObject);
+            Die();
+        }
+    }
+
+    public void ApplyPoison(float poisonDamage, float duration, float tickInterval)
+    {
+        if (poisonCoroutine != null)
+        {
+            StopCoroutine(poisonCoroutine);
+        }
+        poisonCoroutine = StartCoroutine(PoisonEffect(poisonDamage, duration, tickInterval));
+
+    }
+
+    private IEnumerator PoisonEffect(float damage, float duration, float interval)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            TakeDamage(damage);
+            yield return new WaitForSeconds(interval);
+            elapsedTime += interval;
+
+            if (currentHealth <= 0)
+            {
+                yield break;
+            }
         }
     }
 
@@ -33,11 +63,31 @@ public class EnemyHP : MonoBehaviour
     {
         if (healthBarFill != null)
         {
-            healthBarFill.fillAmount = (float)currentHealth / maxHealth;
+            healthBarFill.fillAmount = currentHealth / maxHealth;
         }
     }
 
-    public float GetHealth() // 🔹 Nodig voor EndZone en andere scripts
+    private void Die()
+    {
+        AwardMoney();
+        spawner.EnemyDied();
+        Destroy(gameObject);
+    }
+
+    private void AwardMoney()
+    {
+        int money = 0;
+        switch(enemyType)
+        {
+            case EnemyType.Nomral: money = 10; break;
+            case EnemyType.MiniBoss: money = 50; break;
+            case EnemyType.Boss: money = 200; break;
+        }
+
+        PlacementScript.Instance.money += money;
+    }
+
+    public float GetHealth()
     {
         return currentHealth;
     }
