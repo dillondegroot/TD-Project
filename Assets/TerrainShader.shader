@@ -2,8 +2,9 @@ Shader "Custom/TerrainShader"
 {
     Properties
     {
-
+        _MainTex ("Texture", 2D) = "white" {}
     }
+
     SubShader
     {
         Tags { "RenderType" = "Opaque" }
@@ -15,6 +16,7 @@ Shader "Custom/TerrainShader"
         #pragma target 3.0
 
         sampler2D terrainGradient;
+        sampler2D _MainTex;
         float minTerrainHeight;
         float maxTerrainHeight;
 
@@ -29,9 +31,11 @@ Shader "Custom/TerrainShader"
         {
             float3 worldPosY = IN.worldPos.y;
 
-            float heightValue = saturate((worldPosY - minTerrainHeight) / (maxTerrainHeight - minTerrainHeight));
+            float heightValue = saturate((worldPosY - minTerrainHeight) / (maxTerrainHeight - minTerrainHeight)); 
 
-            o.Albedo = tex2D(terrainGradient, float2(0, heightValue));
+            float4 gradientColor = tex2D(terrainGradient, float2(0, heightValue));
+
+            o.Albedo = gradientColor.rgb;
         }
         ENDCG
     }

@@ -22,6 +22,7 @@ public class TerrainGenerator : MonoBehaviour
     void Start()
     {
         mesh = new Mesh();
+        mesh.name = "Ground";
         GetComponent<MeshFilter>().mesh = mesh;
 
         xOffset = Random.Range(10, 500);
@@ -29,6 +30,16 @@ public class TerrainGenerator : MonoBehaviour
 
         GenerateTerrain();
         GradientToTexture();
+
+        GetComponent<MeshCollider>().sharedMesh = mesh;
+
+        for (int i = 0; i < WayPoints.waypoints.Length; i++)
+        {
+            if (Physics.Raycast(WayPoints.waypoints[i].position, Vector3.down, out RaycastHit hit, 50))
+            {
+                WayPoints.waypoints[i].position = new Vector3(hit.point.x, hit.point.y + 1.5f, hit.point.z);
+            }
+        }
     }
 
     void Update()
