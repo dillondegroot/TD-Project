@@ -3,9 +3,9 @@ using UnityEngine;
 public class SlowBullet : MonoBehaviour
 {
     public float speed = 10f;
-    public float damage = 3f;  // ?? Schade per kogel
-    public float slowMultiplier = 0.5f;  // ?? Vertraagt vijand naar 50% van zijn snelheid
-    public float slowDuration = 5f;  // ?? Hoe lang de vertraging duurt
+    public float damage = 3f;  
+    public float slowMultiplier = 0.5f;  
+    public float slowDuration = 5f;  
 
     private Transform target;
 
@@ -18,14 +18,14 @@ public class SlowBullet : MonoBehaviour
     {
         if (target == null)
         {
-            Destroy(gameObject); // ?? Vernietig de kogel als er geen doel meer is
+            Destroy(gameObject); 
             return;
         }
 
-        // ?? Beweeg naar het doelwit
+       
         transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
-        // ?? Controleer of de kogel het doel raakt
+        
         if (Vector3.Distance(transform.position, target.position) < 0.2f)
         {
             HitTarget();
@@ -35,18 +35,18 @@ public class SlowBullet : MonoBehaviour
     private void HitTarget()
     {
         EnemyHP enemyHP = target.GetComponent<EnemyHP>();
-        EnemyMovement enemyMovement = target.GetComponent<EnemyMovement>(); // ?? Verwijzing naar de movement
+        EnemyMovement enemyMovement = target.GetComponent<EnemyMovement>(); 
 
         if (enemyHP != null)
         {
-            enemyHP.TakeDamage(Mathf.RoundToInt(damage));  // ?? Rond schade af op een heel getal
+            enemyHP.TakeDamage(Mathf.RoundToInt(damage));  
         }
 
         if (enemyMovement != null)
         {
-            enemyMovement.ApplySlow(slowMultiplier, slowDuration); // ?? Roep de slow functie aan
+            enemyMovement.ApplySlow(slowMultiplier, slowDuration); 
         }
 
-        Destroy(gameObject); // ?? Vernietig de kogel na impact
+        Destroy(gameObject); 
     }
 }

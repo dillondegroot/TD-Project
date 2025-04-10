@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    public Transform turret; // Verwijzing naar het turret-object (kanon)
+    public Transform turret; 
     public GameObject bulletPrefab;
-    public Transform[] firePoints; //  Meerdere vuurpunten
-    public float range = 10f; //  Hoe ver de toren vijanden kan zien
-    public float fireRate = 1f; //  Hoe vaak de toren schiet
+    public Transform[] firePoints; 
+    public float range = 10f; 
+    public float fireRate = 1f; 
     private float fireCooldown = 0f;
 
     private Transform target;
@@ -16,7 +16,7 @@ public class Tower : MonoBehaviour
         FindTarget();
         if (target != null)
         {
-            RotateTurret(); // ?? Laat het kanon draaien naar de vijand
+            RotateTurret(); 
             if (fireCooldown <= 0f)
             {
                 Shoot();
@@ -59,7 +59,7 @@ public class Tower : MonoBehaviour
         Vector3 direction = target.position - turret.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         Vector3 rotation = Quaternion.Lerp(turret.rotation, lookRotation, Time.deltaTime * 5f).eulerAngles;
-        turret.rotation = Quaternion.Euler(0f, rotation.y, 0f); // ?? Alleen draaien over de Y-as
+        turret.rotation = Quaternion.Euler(0f, rotation.y, 0f); 
     }
 
     void Shoot()

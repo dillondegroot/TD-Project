@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; // Voorkomt dat de speler omvalt
+        rb.freezeRotation = true; 
     }
 
     void Update()
@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Rotate()
     {
-        float rotateY = Input.GetAxis("Horizontal"); // A & D (Roteren)
+        float rotateY = Input.GetAxis("Horizontal"); // A & D (Draaien)
         transform.Rotate(0, rotateY * rotationSpeed * Time.deltaTime, 0);
     }
 }

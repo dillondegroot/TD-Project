@@ -23,8 +23,7 @@ public class WaveUI : MonoBehaviour
 
     private void Update()
     {
-        waveText.fontSize = 24;  // Pas dit getal aan naar wens
-
+        waveText.fontSize = 24;  
         UpdateWaveText();
     }
 

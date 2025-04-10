@@ -8,7 +8,7 @@ public class Billboard : MonoBehaviour
     {
         if (cam == null)
         {
-            cam = GameObject.Find("Pcam").GetComponent<Camera>(); // Zorg dat Pcam exact zo heet in je scene!
+            cam = GameObject.Find("Pcam").GetComponent<Camera>(); 
         }
 
         if (cam != null)

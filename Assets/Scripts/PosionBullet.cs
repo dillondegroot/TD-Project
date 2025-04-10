@@ -38,6 +38,6 @@ public class PoisonBullet : MonoBehaviour
             enemyHP.ApplyPoison(damagePerTick, duration, tickRate);
         }
 
-        Destroy(gameObject, 1.5f); // Optional: short delay before bullet vanishes
+        Destroy(gameObject, 1.5f); 
     }
 }

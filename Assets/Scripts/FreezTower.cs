@@ -52,7 +52,7 @@ public class FreezeTower : MonoBehaviour
         Vector3 direction = target.position - turret.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         Vector3 rotation = Quaternion.Lerp(turret.rotation, lookRotation, Time.deltaTime * 5f).eulerAngles;
-        turret.rotation = Quaternion.Euler(0f, rotation.y, 0f); //  Alleen draaien over de Y-as
+        turret.rotation = Quaternion.Euler(0f, rotation.y, 0f); 
     }
 
     void Shoot()

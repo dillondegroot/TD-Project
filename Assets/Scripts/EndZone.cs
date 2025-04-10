@@ -2,7 +2,7 @@
 
 public class EndZone : MonoBehaviour
 {
-    public BaseHP baseHealth;  // Link naar de basis
+    public BaseHP baseHealth; 
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,7 +14,7 @@ public class EndZone : MonoBehaviour
                 float damage = enemyHP.GetHealth();
                 baseHealth.TakeDamage(damage);
 
-                // 🔹 Laat de spawner weten dat de vijand weg is
+                
                 if (enemyHP.spawner != null)
                 {
                     enemyHP.spawner.EnemyDied();

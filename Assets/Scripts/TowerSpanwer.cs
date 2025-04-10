@@ -2,27 +2,27 @@
 
 public class TowerSpawner : MonoBehaviour
 {
-    public GameObject towerPrefab; // Sleep je tower prefab hierin in de Inspector
-    public float spawnDistance = 3f; // Afstand waar de toren spawnt voor de speler
+    public GameObject[] towerPrefabs; 
+    public float spawnDistance = 3f;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) // Druk op '1' om een toren te spawnen
-        {
-            SpawnTower();
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SpawnTower(0);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SpawnTower(1);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) SpawnTower(2);
+        if (Input.GetKeyDown(KeyCode.Alpha4)) SpawnTower(3);
     }
 
-    void SpawnTower()
+    void SpawnTower(int index)
     {
-        if (towerPrefab != null)
+        if (index >= 0 && index < towerPrefabs.Length && towerPrefabs[index] != null)
         {
             Vector3 spawnPosition = transform.position + transform.forward * spawnDistance;
-            Instantiate(towerPrefab, spawnPosition, Quaternion.identity);
+            Instantiate(towerPrefabs[index], spawnPosition, Quaternion.identity);
         }
         else
         {
-            Debug.LogWarning("⚠️ Tower prefab is niet toegewezen in de Inspector!");
+            Debug.LogWarning("⚠️ Tower prefab " + index + " is niet ingesteld!");
         }
     }
 }
